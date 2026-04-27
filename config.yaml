@@ -1,0 +1,124 @@
+# ═══════════════════════════════════════════════════════════════
+#  PHANTOM MAILER — Configuration
+#  Every setting here is tweakable. Go wild.
+# ═══════════════════════════════════════════════════════════════
+
+# ── Core Settings ──────────────────────────────────────────────
+core:
+  # How many emails to send in this campaign
+  send_count: 50
+
+  # Target email(s) — single address or list
+  targets:
+    - "target@example.com"
+
+  # Max parallel workers (threads)
+  max_workers: 5
+
+  # Dry run — if true, logs everything but sends nothing
+  dry_run: false
+
+# ── Timing & Evasion ──────────────────────────────────────────
+timing:
+  # Delay between each send (seconds). Randomized within range.
+  min_delay: 2.0
+  max_delay: 8.0
+
+  # Occasional longer "coffee break" pause (every N sends)
+  coffee_break_interval: 15
+  coffee_break_min: 30
+  coffee_break_max: 120
+
+  # Jitter — adds randomness to all delays (0.0 to 1.0)
+  jitter: 0.3
+
+# ── Temp Mail Providers ───────────────────────────────────────
+temp_mail:
+  # Provider: "guerrilla", "mail.tm", "1secmail", or "all" (rotate)
+  provider: "all"
+
+  # How many temp accounts to pre-generate before starting
+  pre_generate: 10
+
+  # Auto-rotate: get a new sender every N sends
+  rotate_every: 3
+
+# ── SMTP Settings (for direct send mode) ──────────────────────
+smtp:
+  # If you want to use your own SMTP relays instead of temp mail
+  enabled: false
+  servers:
+    - host: "smtp.example.com"
+      port: 587
+      user: ""
+      pass: ""
+      tls: true
+    # Add more relays for rotation
+
+  # Rotate through SMTP servers
+  rotate: true
+
+# ── Proxy Settings ────────────────────────────────────────────
+proxy:
+  enabled: false
+  # Format: protocol://user:pass@host:port
+  list:
+    - "socks5://127.0.0.1:9050"
+    - "http://proxy1:8080"
+
+  # Rotate proxy every N sends
+  rotate_every: 5
+
+  # File to load proxies from (one per line, overrides list)
+  file: ""
+
+# ── Message Generation ────────────────────────────────────────
+message:
+  # Template style: "random" picks a different template per email,
+  # or specify one: "lottery", "phishing_bank", "inheritance", etc.
+  template_mode: "random"
+
+  # Locale for Faker (names, addresses, etc.)
+  locale: "en_US"
+
+  # Add random "personal" touches
+  add_typo: true          # Occasional intentional typos for realism
+  add_signature: true     # Random email signatures
+  add_disclaimer: true    # Legalese footer (ironic, we know)
+  add_urgency: true       # "ACT NOW" style pressure language
+
+# ── Subject Line Mutations ────────────────────────────────────
+subject:
+  # Mutate subjects per email
+  mutate: true
+  # Prefix/suffix randomization
+  add_prefix: true        # "URGENT:", "Re:", "FW:", etc.
+  add_emoji: true         # 🚨 🎉 ⚠️ etc.
+  emoji_probability: 0.3
+
+# ── Campaign & Resume ─────────────────────────────────────────
+campaign:
+  # Auto-save progress every N sends
+  auto_save_interval: 10
+
+  # Resume file (set to resume a previous campaign)
+  resume_file: ""
+
+  # Campaign name (for logging)
+  name: "phantom_campaign"
+
+# ── Analytics ─────────────────────────────────────────────────
+analytics:
+  # Track and display stats in real-time
+  enabled: true
+  # Show live dashboard during send
+  live_dashboard: true
+  # Save report to file after completion
+  save_report: true
+  report_format: "json"   # "json" or "csv"
+
+# ── Logging ───────────────────────────────────────────────────
+logging:
+  level: "INFO"           # DEBUG, INFO, WARNING, ERROR
+  save_to_file: true
+  log_file: "phantom.log"
